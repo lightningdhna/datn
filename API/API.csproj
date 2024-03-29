@@ -29,9 +29,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="NewFolder\" />
     <Folder Include="Services\NewFolder\" />
+    <Folder Include="Services\UserManagement\" />
   </ItemGroup>
 
 </Project>

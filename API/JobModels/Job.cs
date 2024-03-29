@@ -8,7 +8,7 @@ namespace API.JobModels
         public String Title { get; set; }
         public String Description { get; set; }
 
-        public Role ResponsibleRole { get; set; } = Role.DefaultRole;
+
         public Guid UserId { get; init; }
 
 

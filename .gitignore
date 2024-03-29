@@ -2,5 +2,8 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/API/.vs/API
+/API/.vs
 /API/obj
+/API/bin
+/API/Migrations
+/Tests.API

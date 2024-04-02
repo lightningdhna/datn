@@ -1,6 +1,8 @@
 ﻿
+using API.AssignmentModels;
 using API.Authorization;
-using API.UserModels;
+using API.EmployeeModels;
+using API.JobModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -10,8 +12,30 @@ namespace API
     public class MyDbContext(DbContextOptions<MyDbContext> options) : IdentityDbContext<IdentityUser>(options)
     {
 
-        //public required DbSet<User> UserList { get; set; }
+        public required DbSet<Employee> EmployeeList { get; set; }
 
+        public required DbSet<Order> OrderList { get; set; }
+        public required DbSet<OrderStage> StageList { get; set; }
+
+        public required DbSet<Assignment> AssignmentList { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<OrderStage>()
+                .HasKey(s => new { s.OrderId, StageId = s.StageIndex });
+            modelBuilder.Entity<Assignment>()
+                .HasOne(a => a.Stage)
+                .WithMany()
+                .HasForeignKey(a => new { a.OrderId, a.StageId })
+                .HasPrincipalKey(s => new { s.OrderId, StageId = s.StageIndex });
+
+
+            modelBuilder.Entity<Assignment>()
+
+                .HasKey(a => new { a.OrderId,a.StageId, a.EmployeeId })
+                ;
+        }
 
     }
 }

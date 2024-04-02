@@ -1,0 +1,7 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d8bae2cc_002D5db2_002D42fd_002D8f03_002D61be081e2a0d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="DeleteEmployeeAsyncTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;MSTest::836CB2E3-ACC9-46B9-A3B5-C1439636313D::net8.0::Tests.API.EmployeeModels.EmployeeManagementServicesTests.DeleteEmployeeAsyncTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::836CB2E3-ACC9-46B9-A3B5-C1439636313D::net8.0::Tests.API.EmployeeModels.EmployeeManagementServicesTests.AddEmployeeAsyncTest&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

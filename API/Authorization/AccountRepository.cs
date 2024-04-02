@@ -2,7 +2,6 @@
 using System.Security.Claims;
 using System.Text;
 using API.Authorization.Models;
-using API.UserModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;

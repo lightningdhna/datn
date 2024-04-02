@@ -1,8 +1,12 @@
 using System.Text;
 using API;
+using API.AssignmentModels.Services;
 using API.Authorization;
 using API.Authorization.Models;
+using API.EmployeeModels;
+using API.JobModels.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
@@ -48,6 +52,12 @@ services.AddAuthentication(options =>
     };
 
 });
+
+
+services.AddScoped<IEmployeeService, EmployeeService>();
+services.AddScoped<IOrderService, OrderService>();
+services.AddScoped<IStageService,StageService>();
+services.AddScoped<IAssignmentService, AssignmentService>();
 
 services.AddScoped<IAccountRepository, AccountRepository>();
 

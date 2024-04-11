@@ -1,6 +1,5 @@
 ﻿using API.AssignmentModels.Services;
 using API.EmployeeModels;
-using API.JobModels;
 using API.JobModels.Services;
 using Microsoft.AspNetCore.Mvc;
 

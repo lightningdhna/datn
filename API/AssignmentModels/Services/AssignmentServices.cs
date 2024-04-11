@@ -96,8 +96,8 @@ namespace API.AssignmentModels.Services
         }
         public async Task<bool> AssignmentExistsAsync(int orderId, int stageId, string employeeId)
         {
-            return await context.AssignmentList
-                .AnyAsync(a => a.OrderId == orderId && a.StageId == stageId && a.EmployeeId.Equals(employeeId));
+            var assignment = await context.AssignmentList.FindAsync(orderId, stageId,employeeId);
+            return assignment != null;
         }
 
 

@@ -1,5 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using API.Authorization.Models;
 using Microsoft.AspNetCore.Identity;
@@ -63,9 +64,17 @@ namespace API.Authorization
 
         public async Task<string> SignInAsync(SignInModel signInModel)
         {
-            var user = await CheckSignIn(signInModel);
+
+            var user = await userManager.FindByNameAsync(signInModel.Username);
             if (user == null)
-                return string.Empty;
+            {
+                throw new AuthException(AuthError.WrongUsername);
+            }
+            var passwordValid = await userManager.CheckPasswordAsync(user, signInModel.Password);
+            if (!passwordValid)
+            {
+                throw new AuthException(AuthError.WrongPassword);
+            }
 
             var authenticationClaims = await CreateClaims(user);
 
@@ -79,6 +88,39 @@ namespace API.Authorization
             );
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+        //public async Task<(string AccessToken, string RefreshToken)> SignInAsync(SignInModel signInModel)
+        //{
+        //    var user = await CheckSignIn(signInModel);
+        //    if (user == null)
+        //        return (string.Empty, string.Empty);
+
+        //    var authenticationClaims = await CreateClaims(user);
+
+        //    var authenticationKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Secret"]!));
+        //    var token = new JwtSecurityToken(
+        //        issuer: configuration["Jwt:Issuer"],
+        //        audience: configuration["Jwt:Audience"],
+        //        claims: authenticationClaims,
+        //        expires: DateTime.Now.AddMinutes(15), // Short-lived access token
+        //        signingCredentials: new SigningCredentials(authenticationKey, SecurityAlgorithms.HmacSha512Signature)
+        //    );
+
+        //    var refreshToken = GenerateRefreshToken(); // Implement this method to generate a secure random token
+
+        //    // Store the refresh token in your database here
+
+        //    return (new JwtSecurityTokenHandler().WriteToken(token), refreshToken);
+        //}
+        private static string GenerateRefreshToken()
+        {
+            var randomNumber = new byte[32];
+            using var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(randomNumber);
+            return Convert.ToBase64String(randomNumber);
+        }
+
+
+
 
         public async Task AddRoleToUser(string username, string role)
         {

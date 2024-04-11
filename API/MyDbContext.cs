@@ -18,20 +18,20 @@ namespace API
         public required DbSet<OrderStage> StageList { get; set; }
 
         public required DbSet<Assignment> AssignmentList { get; set; }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(builder);
 
-            modelBuilder.Entity<OrderStage>()
+            builder.Entity<OrderStage>()
                 .HasKey(s => new { s.OrderId, StageId = s.StageIndex });
-            modelBuilder.Entity<Assignment>()
+            builder.Entity<Assignment>()
                 .HasOne(a => a.Stage)
                 .WithMany()
                 .HasForeignKey(a => new { a.OrderId, a.StageId })
                 .HasPrincipalKey(s => new { s.OrderId, StageId = s.StageIndex });
 
 
-            modelBuilder.Entity<Assignment>()
+            builder.Entity<Assignment>()
 
                 .HasKey(a => new { a.OrderId,a.StageId, a.EmployeeId })
                 ;

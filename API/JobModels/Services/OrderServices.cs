@@ -35,8 +35,10 @@ namespace API.JobModels.Services
         }
         public async Task<bool> OrderExistsAsync(int orderId)
         {
-            return await context.OrderList
-                .AnyAsync(o => o.OrderId == orderId);
+            //return await context.OrderList
+            //    .AnyAsync(o => o.OrderId == orderId);
+            var order = await context.OrderList.FindAsync(orderId);
+            return order != null;
         }
 
 

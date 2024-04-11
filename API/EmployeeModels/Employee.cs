@@ -30,6 +30,8 @@ namespace API.EmployeeModels
 
         public List<OrderStage> JoinStages { get; set; } = [];
 
+        [MaxLength(256)] public string? Username { get; set; }
+
 
 
     }

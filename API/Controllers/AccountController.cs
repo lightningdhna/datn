@@ -25,12 +25,23 @@ namespace API.Controllers
         [HttpPost("signin")]
         public async Task<IActionResult> SignIn(SignInModel signInModel)
         {
-            var token = await repo.SignInAsync(signInModel);
-            if (string.IsNullOrEmpty(token))
+            try
             {
-                return Unauthorized();
+                var token = await repo.SignInAsync(signInModel);
+                return Ok(new { Token = token });
             }
-            return Ok(token);
+            catch (AuthException ex)
+            {
+                switch (ex.Error)
+                {
+                    case AuthError.WrongUsername:
+                        return NotFound("Username not found");
+                    case AuthError.WrongPassword:
+                        return Unauthorized("Invalid password");
+                    default:
+                        throw;
+                }
+            }
         }
     }
 }

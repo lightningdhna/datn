@@ -3,11 +3,13 @@ using API;
 using API.AssignmentModels.Services;
 using API.Authorization;
 using API.Authorization.Models;
+using API.CacheMemoryService;
 using API.EmployeeModels;
 using API.JobModels.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.TagHelpers.Cache;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.Tokens;
@@ -53,19 +55,43 @@ services.AddAuthentication(options =>
 
 });
 
+services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        policyBuilder =>
+        {
+            policyBuilder.WithOrigins("http://localhost:5173") // Allow specific origin
+                .AllowAnyHeader() // Allow all headers
+                .AllowAnyMethod(); // Allow all methods
+        });
+});
 
 services.AddScoped<IEmployeeService, EmployeeService>();
 services.AddScoped<IOrderService, OrderService>();
-services.AddScoped<IStageService,StageService>();
+services.AddScoped<IStageService, StageService>();
 services.AddScoped<IAssignmentService, AssignmentService>();
+services.AddScoped<IRedisCache,RedisCache>();
+services.AddScoped<ICacheQueryService, CacheQueryService>();
+
+
 
 services.AddScoped<IAccountRepository, AccountRepository>();
 
+//database 
 
 services.AddDbContext<MyDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+// redis
+
+services.AddStackExchangeRedisCache(redisOption =>
+{
+    var connection = builder.Configuration.GetConnectionString("RedisConnection")!;
+    redisOption.Configuration = connection;
+});
+
 
 
 builder.Services.AddSwaggerGen(option =>
@@ -120,13 +146,13 @@ using (var scope = app.Services.CreateScope())
 
 
 
-
+app.UseCors("AllowSpecificOrigin");
 
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-   
+
     app.UseSwagger();
     app.UseSwaggerUI();
 }

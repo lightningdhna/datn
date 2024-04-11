@@ -10,6 +10,7 @@ namespace API.JobModels.Services
             stage.Order = order;
             context.StageList.Add(stage);
             await context.SaveChangesAsync();
+
         }
 
         public async Task CreateStage(int orderId, OrderStage stage)
@@ -54,8 +55,8 @@ namespace API.JobModels.Services
 
         public async Task<bool> StageExistsAsync(int orderId, int stageIndex)
         {
-            return await context.StageList
-                .AnyAsync(s => s.OrderId == orderId && s.StageIndex == stageIndex);
+            var stage = await context.StageList.FindAsync(orderId, stageIndex);
+            return stage != null;
         }
 
     }

@@ -51,10 +51,18 @@ namespace API.EmployeeModels
         {
             return await context.EmployeeList.FindAsync(employeeId);
         }
+        //public async Task<bool> EmployeeExistsAsync(string employeeId)
+        //{
+        //    return await context.EmployeeList
+        //        .AnyAsync(e => e.EmployeeId.Equals(employeeId));
+        //}
         public async Task<bool> EmployeeExistsAsync(string employeeId)
         {
-            return await context.EmployeeList
-                .AnyAsync(e => e.EmployeeId.Equals(employeeId));
+            var employee = await context.EmployeeList.FindAsync(employeeId);
+            return employee != null;
         }
+
+
+
     }
 }

@@ -70,7 +70,7 @@ watchEffect(() => {
           />
         </div>
         <div
-          style="margin-inline :5px;"
+          style="margin-inline :7px;"
           class="step-text"
         >
           <h5 class="text-h4 font-weight-semibold mb-1">
@@ -79,7 +79,7 @@ watchEffect(() => {
         </div>
         <div
           class="step-text"
-          style="max-inline-size: 45%;"
+          style="inline-size: 50%;max-inline-size: 100%;"
         >
           <H6 class="text-h6 font-weight-semibold mb-1">
             {{ step.title }}
@@ -128,11 +128,11 @@ watchEffect(() => {
 
   .step-line {
     z-index: 10;
-    display: flex;
+    display: block;
     align-items: center;
     background-color: var(--inactive-color);
     block-size: 5px;
-    inline-size: 40%;
+    inline-size: 95%;
     inset-block-start: calc(100% - 30px);
     inset-inline-start: 0;
     margin-inline: 10px;

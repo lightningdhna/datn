@@ -36,17 +36,19 @@ const nextStep = async () => {
     isCurrentStepValid.value = false
     props.onValidateFail?.()
 
-    return
+    return false
   }
   isCurrentStepValid.value = true
   props.onValidateSuccess?.()
 
   currentStep.value++
+
+  return true
 }
 
-const onFinish = () => {
-  nextStep()
-  props.onFinish?.()
+const onFinish = async () => {
+  if (await nextStep())
+    props.onFinish?.()
 }
 
 const backStep = () => {

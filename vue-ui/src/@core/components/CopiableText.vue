@@ -34,6 +34,7 @@ const iconClicked = () => {
       {{ props.label }}
     </div>
     <VTextField
+      :rounded="0"
       variant="filled"
       readonly
       :value="props.value"

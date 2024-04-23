@@ -1,4 +1,5 @@
-import axios, { isAxiosError } from 'axios'
+import { isAxiosError } from 'axios'
+import api from '@/services/api'
 
 interface IAuthenticator {
   authenticate(username: string, password: string): Promise<string>
@@ -7,7 +8,7 @@ interface IAuthenticator {
 export class MyAuthenticator implements IAuthenticator {
   async authenticate(username: string, password: string): Promise<string> {
     try {
-      const response = await axios.post('https://localhost:7007/api/Account/signin', { username, password })
+      const response = await api.post('/api/Account/signin', { username, password })
 
       if (response.status === 200) {
         // If the status code is 200, the authentication was successful.

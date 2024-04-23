@@ -11,13 +11,7 @@ export const routes = [
           requireAuth: true,
         },
       },
-      {
-        path: 'add-employee',
-        component: () => import('@/pages/admin/AddEmployee.vue'),
-        meta: {
-          requireAuth: true,
-        },
-      },
+
       {
         path: 'account-settings',
         component: () => import('@/pages/account-settings.vue'),
@@ -43,6 +37,22 @@ export const routes = [
         component: () => import('@/pages/form-layouts.vue'),
       },
     ],
+  },
+  {
+    path: '/admin/',
+    component: () => import('@/layouts/default.vue'),
+    meta: {
+      requireAuth: true,
+      requireAdmin: true,
+    },
+    children:
+      [
+        {
+          path: 'add-employee',
+          component: () => import('@/pages/admin/AddEmployee.vue'),
+        },
+      ],
+
   },
   {
     path: '/',

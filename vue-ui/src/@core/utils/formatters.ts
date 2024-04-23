@@ -46,3 +46,8 @@ export const formatDateToMonthShort = (value: string, toTimeForCurrentDay = true
 }
 
 export const prefixWithPlus = (value: number) => value > 0 ? `+${value}` : value
+export const formatCamelCase = (value: string): string => {
+  return value
+    .replace(/([a-z])([A-Z])/g, '$1 $2') // insert a space before all found uppercase letters that follow a lowercase letter
+    .replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase()) // capitalize the first letter of the string and the first letter after each space
+}
